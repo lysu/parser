@@ -211,7 +211,7 @@ func (s *testLexerSuite) TestscanString(c *C) {
 
 	for _, v := range table {
 		l := NewScanner(v.raw)
-		tok, pos, lit := l.scan()
+		tok, pos, lit := l.Scan()
 		c.Assert(tok, Equals, stringLit)
 		c.Assert(pos.Offset, Equals, 0)
 		c.Assert(lit, Equals, v.expect)
@@ -242,12 +242,12 @@ func (s *testLexerSuite) TestIdentifier(c *C) {
 
 func (s *testLexerSuite) TestSpecialComment(c *C) {
 	l := NewScanner("/*!40101 select\n5*/")
-	tok, pos, lit := l.scan()
+	tok, pos, lit := l.Scan()
 	c.Assert(tok, Equals, identifier)
 	c.Assert(lit, Equals, "select")
 	c.Assert(pos, Equals, Pos{0, 0, 9})
 
-	tok, pos, lit = l.scan()
+	tok, pos, lit = l.Scan()
 	c.Assert(tok, Equals, intLit)
 	c.Assert(lit, Equals, "5")
 	c.Assert(pos, Equals, Pos{1, 1, 16})
@@ -268,7 +268,7 @@ func (s *testLexerSuite) TestOptimizerHint(c *C) {
 		{hintEnd, "", 14},
 	}
 	for i := 0; ; i++ {
-		tok, pos, lit := l.scan()
+		tok, pos, lit := l.Scan()
 		if tok == 0 {
 			return
 		}

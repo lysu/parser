@@ -61,7 +61,7 @@ type mysqlSpecificCodeScanner struct {
 }
 
 func (s *mysqlSpecificCodeScanner) scan() (tok int, pos Pos, lit string) {
-	tok, pos, lit = s.Scanner.scan()
+	tok, pos, lit = s.Scanner.Scan()
 	pos.Line += s.Pos.Line
 	pos.Col += s.Pos.Col
 	pos.Offset += s.Pos.Offset
@@ -75,7 +75,7 @@ type optimizerHintScanner struct {
 }
 
 func (s *optimizerHintScanner) scan() (tok int, pos Pos, lit string) {
-	tok, pos, lit = s.Scanner.scan()
+	tok, pos, lit = s.Scanner.Scan()
 	pos.Line += s.Pos.Line
 	pos.Col += s.Pos.Col
 	pos.Offset += s.Pos.Offset
@@ -88,7 +88,7 @@ func (s *optimizerHintScanner) scan() (tok int, pos Pos, lit string) {
 	return
 }
 
-// Errors returns the errors during a scan.
+// Errors returns the errors during a Scan.
 func (s *Scanner) Errors() []error {
 	return s.errs
 }
@@ -102,7 +102,7 @@ func (s *Scanner) reset(sql string) {
 	s.specialComment = nil
 }
 
-func (s *Scanner) stmtText() string {
+func (s *Scanner) StmtText() string {
 	endPos := s.r.pos().Offset
 	if s.r.s[endPos-1] == '\n' {
 		endPos = endPos - 1 // trim new line
@@ -135,7 +135,7 @@ func (s *Scanner) Errorf(format string, a ...interface{}) {
 // return 0 tells parser that scanner meets EOF,
 // return invalid tells parser that scanner meets illegal character.
 func (s *Scanner) Lex(v *yySymType) int {
-	tok, pos, lit := s.scan()
+	tok, pos, lit := s.Scan()
 	v.offset = pos.Offset
 	v.ident = lit
 	if tok == identifier {
@@ -209,17 +209,17 @@ func (s *Scanner) skipWhitespace() rune {
 	return s.r.incAsLongAs(unicode.IsSpace)
 }
 
-func (s *Scanner) scan() (tok int, pos Pos, lit string) {
+func (s *Scanner) Scan() (tok int, pos Pos, lit string) {
 	if s.specialComment != nil {
-		// Enter specialComment scan mode.
+		// Enter specialComment Scan mode.
 		// for scanning such kind of comment: /*! MySQL-specific code */
 		specialComment := s.specialComment
 		tok, pos, lit = specialComment.scan()
 		if tok != 0 {
-			// return the specialComment scan result as the result
+			// return the specialComment Scan result as the result
 			return
 		}
-		// leave specialComment scan mode after all stream consumed.
+		// leave specialComment Scan mode after all stream consumed.
 		s.specialComment = nil
 	}
 
@@ -312,7 +312,7 @@ func startWithSharp(s *Scanner) (tok int, pos Pos, lit string) {
 	s.r.incAsLongAs(func(ch rune) bool {
 		return ch != '\n'
 	})
-	return s.scan()
+	return s.Scan()
 }
 
 func startWithDash(s *Scanner) (tok int, pos Pos, lit string) {
@@ -323,7 +323,7 @@ func startWithDash(s *Scanner) (tok int, pos Pos, lit string) {
 			s.r.incAsLongAs(func(ch rune) bool {
 				return ch != '\n'
 			})
-			return s.scan()
+			return s.Scan()
 		}
 	}
 	if strings.HasPrefix(s.r.s[pos.Offset:], "->>") {
@@ -401,7 +401,7 @@ func startWithSlash(s *Scanner) (tok int, pos Pos, lit string) {
 			}
 		}
 
-		return s.scan()
+		return s.Scan()
 	}
 	tok = int('/')
 	return

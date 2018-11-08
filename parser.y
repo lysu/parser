@@ -6138,7 +6138,7 @@ StatementList:
 		if $1 != nil {
 			s := $1
 			if lexer, ok := yylex.(stmtTexter); ok {
-				s.SetText(lexer.stmtText())
+				s.SetText(lexer.StmtText())
 			}
 			parser.result = append(parser.result, s)
 		}
@@ -6148,7 +6148,7 @@ StatementList:
 		if $3 != nil {
 			s := $3
 			if lexer, ok := yylex.(stmtTexter); ok {
-				s.SetText(lexer.stmtText())
+				s.SetText(lexer.StmtText())
 			}
 			parser.result = append(parser.result, s)
 		}

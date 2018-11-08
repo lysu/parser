@@ -71,7 +71,7 @@ type Parser struct {
 }
 
 type stmtTexter interface {
-	stmtText() string
+	StmtText() string
 }
 
 // New returns a Parser object.
