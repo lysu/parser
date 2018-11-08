@@ -96,7 +96,7 @@ func (parser *Parser) Parse(sql, charset, collation string) ([]ast.StmtNode, err
 	parser.result = parser.result[:0]
 
 	var l yyLexer
-	parser.lexer.reset(sql)
+	parser.lexer.Reset(sql)
 	l = &parser.lexer
 	yyParse(l, parser)
 

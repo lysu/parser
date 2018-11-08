@@ -90,7 +90,7 @@ func (s *testLexerSuite) TestUnderscoreCS(c *C) {
 	tok = scanner.Lex(&v)
 	c.Check(tok, Equals, stringLit)
 
-	scanner.reset("N'string'")
+	scanner.Reset("N'string'")
 	tok = scanner.Lex(&v)
 	c.Check(tok, Equals, underscoreCS)
 	tok = scanner.Lex(&v)
@@ -232,7 +232,7 @@ func (s *testLexerSuite) TestIdentifier(c *C) {
 	}
 	l := &Scanner{}
 	for _, item := range table {
-		l.reset(item[0])
+		l.Reset(item[0])
 		var v yySymType
 		tok := l.Lex(&v)
 		c.Assert(tok, Equals, identifier)
@@ -293,7 +293,7 @@ func (s *testLexerSuite) TestInt(c *C) {
 	scanner := NewScanner("")
 	for _, t := range tests {
 		var v yySymType
-		scanner.reset(t.input)
+		scanner.Reset(t.input)
 		tok := scanner.Lex(&v)
 		c.Assert(tok, Equals, intLit)
 		switch i := v.item.(type) {
@@ -324,12 +324,12 @@ func (s *testLexerSuite) TestSQLModeANSIQuotes(c *C) {
 	scanner.SetSQLMode(mysql.ModeANSIQuotes)
 	for _, t := range tests {
 		var v yySymType
-		scanner.reset(t.input)
+		scanner.Reset(t.input)
 		tok := scanner.Lex(&v)
 		c.Assert(tok, Equals, t.tok)
 		c.Assert(v.ident, Equals, t.ident)
 	}
-	scanner.reset(`'string' 'string'`)
+	scanner.Reset(`'string' 'string'`)
 	var v yySymType
 	tok := scanner.Lex(&v)
 	c.Assert(tok, Equals, stringLit)

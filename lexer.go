@@ -93,8 +93,8 @@ func (s *Scanner) Errors() []error {
 	return s.errs
 }
 
-// reset resets the sql string to be scanned.
-func (s *Scanner) reset(sql string) {
+// Reset resets the sql string to be scanned.
+func (s *Scanner) Reset(sql string) {
 	s.r = reader{s: sql, p: Pos{Line: 1}}
 	s.buf.Reset()
 	s.errs = s.errs[:0]
@@ -655,7 +655,7 @@ func startWithDot(s *Scanner) (tok int, pos Pos, lit string) {
 		if s.r.eof() || !isIdentChar(s.r.peek()) {
 			return
 		}
-		// Fail to parse a float, reset to dot.
+		// Fail to parse a float, Reset to dot.
 		s.r.p = save
 	}
 	tok, lit = int('.'), "."
