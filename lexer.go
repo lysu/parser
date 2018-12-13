@@ -370,22 +370,22 @@ func startWithSlash(s *Scanner) (tok int, pos Pos, lit string) {
 		comment := s.r.data(&pos)
 
 		// See https://dev.mysql.com/doc/refman/5.7/en/optimizer-hints.html
-		if strings.HasPrefix(comment, "/*+") {
-			begin := sqlOffsetInComment(comment)
-			end := len(comment) - 2
-			sql := comment[begin:end]
-			s.specialComment = &optimizerHintScanner{
-				Scanner: NewScanner(sql),
-				Pos: Pos{
-					pos.Line,
-					pos.Col,
-					pos.Offset + begin,
-				},
-			}
-
-			tok = hintBegin
-			return
-		}
+		//if strings.HasPrefix(comment, "/*+") {
+		//begin := sqlOffsetInComment(comment)
+		//end := len(comment) - 2
+		//sql := comment[begin:end]
+		//s.specialComment = &optimizerHintScanner{
+		//	Scanner: NewScanner(sql),
+		//	Pos: Pos{
+		//		pos.Line,
+		//		pos.Col,
+		//		pos.Offset + begin,
+		//	},
+		//}
+		//
+		//tok = hintBegin
+		//return
+		//}
 
 		// See http://dev.mysql.com/doc/refman/5.7/en/comments.html
 		// Convert "/*!VersionNumber MySQL-specific-code */" to "MySQL-specific-code".
