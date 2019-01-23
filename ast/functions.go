@@ -175,6 +175,8 @@ const (
 	YearWeek         = "yearweek"
 	LastDay          = "last_day"
 	TiDBParseTso     = "tidb_parse_tso"
+	TiDBKeyHex       = "tidb_key_hex"
+	TiDBKeyMvcc      = "tidb_key_mvcc"
 
 	// string functions
 	ASCII           = "ascii"
