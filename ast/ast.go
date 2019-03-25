@@ -118,9 +118,9 @@ type DMLNode interface {
 type ResultField struct {
 	Column       *model.ColumnInfo
 	ColumnAsName model.CIStr
-	Table        *model.TableInfo
+	Table        string
 	TableAsName  model.CIStr
-	DBName       model.CIStr
+	DBName       string
 
 	// Expr represents the expression for the result field. If it is generated from a select field, it would
 	// be the expression of that select field, otherwise the type would be ValueExpr and value
